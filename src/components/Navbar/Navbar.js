@@ -11,6 +11,8 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { signoutUser } from '../Login/actions';
 
 const useStyles = makeStyles({
   root: {
@@ -30,11 +32,18 @@ const useStyles = makeStyles({
     textDecoration: 'none',
     color: 'black',
   },
+  username: {
+    color: 'white',
+    marginRight: 10
+  }
 });
 
 function Navbar() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+  const username = useSelector(state => state.username);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleMenuClick = event => {
@@ -48,6 +57,29 @@ function Navbar() {
   const handleHomeClick = () => {
     setAnchorEl(null);
     history.push('/home');
+  };
+
+  const handleLogoutClick = () => {
+    dispatch(signoutUser());
+  }
+
+  const handleLoginClick = () => {
+    history.push('/signin');
+  }
+
+  const renderLoginButton = () => {
+    if (auth && auth.authenticated) {
+      return (
+        <Button variant="contained" onClick={handleLogoutClick}>
+          Log Out
+        </Button>
+      );
+    }
+    return (
+      <Button variant="contained" onClick={handleLoginClick}>
+        Log In
+      </Button>
+    );
   };
 
   return (
@@ -72,9 +104,15 @@ function Navbar() {
           >
             <MenuItem onClick={handleHomeClick}>Home</MenuItem>
           </Menu>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h4" className={classes.title}>
             BarCode
           </Typography>
+          {username ?
+            <Typography variant="h6" className={classes.username}>
+              Hi {username}
+            </Typography>
+            : null}
+          {renderLoginButton()}
         </Toolbar>
       </AppBar>
     </div>
