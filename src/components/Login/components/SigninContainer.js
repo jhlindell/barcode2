@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { signupOnChange, clearSignup, clearAuthError, signInUser } from '../actions';
 import SigninForm from './SigninForm';
 
 function SigninContainer(props) {
   const dispatch = useDispatch();
   const signup = useSelector(state => state.signup);
-  const auth = useSelector(state => state.auth);
+  const { authenticated } = useSelector(state => state.auth);
   const { history } = props;
 
   useEffect(() => {
@@ -17,10 +16,10 @@ function SigninContainer(props) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (auth.authenticated) {
+    if (authenticated) {
       history.push('recipes');
     }
-  }, [auth, history]);
+  }, [authenticated, history]);
 
   function handleOnChange(newSignupValue) {
     dispatch(signupOnChange(newSignupValue));

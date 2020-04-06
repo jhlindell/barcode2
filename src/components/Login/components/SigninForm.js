@@ -88,17 +88,17 @@ function SigninForm(props) {
         <CardActions className={classes.cardActions}>
           <Button
             variant="contained"
-            color="secondary"
-            onClick={cancel}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
             color="primary"
             onClick={onSubmit}
           >
             Login
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={cancel}
+          >
+            Cancel
           </Button>
         </CardActions>
       </Card>

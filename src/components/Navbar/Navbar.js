@@ -35,6 +35,9 @@ const useStyles = makeStyles({
   username: {
     color: 'white',
     marginRight: 10
+  },
+  button: {
+    marginRight: 10
   }
 });
 
@@ -67,6 +70,10 @@ function Navbar() {
     history.push('/signin');
   }
 
+  const handleSignupClick = () => {
+    history.push('/signup');
+  }
+
   const renderLoginButton = () => {
     if (auth && auth.authenticated) {
       return (
@@ -76,10 +83,19 @@ function Navbar() {
       );
     }
     return (
-      <Button variant="contained" onClick={handleLoginClick}>
-        Log In
-      </Button>
-    );
+      <div>
+        <Button
+          variant="contained"
+          onClick={handleLoginClick}
+          className={classes.button}
+        >
+          Log In
+        </Button>
+        <Button variant="contained" onClick={handleSignupClick}>
+          Sign up
+        </Button>
+      </div>
+    )
   };
 
   return (

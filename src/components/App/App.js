@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Navbar from '../Navbar/Navbar';
 import Home from '../Home/Home';
 import Signin from '../Login/components/SigninContainer';
+import Signup from '../Login/components/SignupContainer';
 
 const useStyles = makeStyles({
   appRoot: {
@@ -19,6 +20,7 @@ function App() {
       <Navbar />
       <Switch>
         <Route path='/signin' component={Signin} />
+        <Route path='/signup' component={Signup} />
         <Route exact path="/" component={Home} />
       </Switch>
     </div>

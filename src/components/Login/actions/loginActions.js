@@ -1,5 +1,15 @@
 import axios from "axios";
-import { AUTH_USER, SET_USERNAME, AUTH_ERROR, CLEAR_AUTH_ERROR, USER_LOGOUT, SIGNUP_ONCHANGE, CLEAR_SIGNUP } from './types';
+import {
+  AUTH_USER,
+  SET_USERNAME,
+  AUTH_ERROR,
+  CLEAR_AUTH_ERROR,
+  USER_LOGOUT,
+  SIGNUP_ONCHANGE,
+  CLEAR_SIGNUP,
+  SET_SIGNUP_ERRORS,
+  CLEAR_SIGNUP_ERRORS
+} from './types';
 const URL = process.env.REACT_APP_SERVER_URL;
 
 export function signUpUser({ username, email, password }) {
@@ -50,7 +60,9 @@ export function getUserName() {
     const { auth } = getState();
     axios.get(`${URL}/username`, { headers: { authorization: auth.token } })
       .then(response => {
-        dispatch({ type: SET_USERNAME, payload: response.data });
+        const string = response.data;
+        const capString = string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+        dispatch({ type: SET_USERNAME, payload: capString });
       })
       .catch(error => {
         let err = error.toString();
@@ -65,4 +77,12 @@ export function signupOnChange(value) {
 
 export function clearSignup() {
   return { type: CLEAR_SIGNUP };
+}
+
+export function setSignupErrors(errors) {
+  return { type: SET_SIGNUP_ERRORS, payload: errors };
+}
+
+export function clearSignupErrors() {
+  return { type: CLEAR_SIGNUP_ERRORS };
 }

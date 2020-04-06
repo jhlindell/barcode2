@@ -23,8 +23,7 @@ export default function authReducer(state = initialState, action) {
       let error = styleErrorCode(action.payload)
       return { ...state, error };
     case CLEAR_AUTH_ERROR:
-      const err = '';
-      return { ...state, err };
+      return { ...state, error: undefined };
     default:
       return state;
   }
