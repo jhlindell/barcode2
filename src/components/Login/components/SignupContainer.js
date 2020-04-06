@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   signupOnChange,
   clearSignup,
-  clearAuthError,
   signUpUser,
   setSignupErrors,
   clearSignupErrors
@@ -17,12 +16,6 @@ function SignupContainer(props) {
   const [showTerms, setShowTerms] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const { history } = props;
-
-  useEffect(() => {
-    return function cleanup() {
-      dispatch(clearAuthError())
-    };
-  }, [dispatch]);
 
   useEffect(() => {
     if (auth.authenticated) {

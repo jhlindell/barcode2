@@ -5,6 +5,7 @@ import Navbar from '../Navbar/Navbar';
 import Home from '../Home/Home';
 import Signin from '../Login/components/SigninContainer';
 import Signup from '../Login/components/SignupContainer';
+import Messages from '../Messages/components/Messages';
 
 const useStyles = makeStyles({
   appRoot: {
@@ -23,6 +24,7 @@ function App() {
         <Route path='/signup' component={Signup} />
         <Route exact path="/" component={Home} />
       </Switch>
+      <Messages />
     </div>
   );
 }
