@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { signupOnChange, clearSignup, clearAuthError, signInUser } from '../actions';
+import { signupOnChange, clearSignup, signInUser } from '../actions';
 import SigninForm from './SigninForm';
 
 function SigninContainer(props) {
@@ -8,12 +8,6 @@ function SigninContainer(props) {
   const signup = useSelector(state => state.signup);
   const { authenticated } = useSelector(state => state.auth);
   const { history } = props;
-
-  useEffect(() => {
-    return function cleanup() {
-      dispatch(clearAuthError())
-    };
-  }, [dispatch]);
 
   useEffect(() => {
     if (authenticated) {

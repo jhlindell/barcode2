@@ -1,12 +1,4 @@
-import { AUTH_USER, AUTH_ERROR, CLEAR_AUTH_ERROR } from '../actions';
-
-const styleErrorCode = (code) => {
-  if (code.message) {
-    return (code.message.includes('401')) ? 'bad username or password' : code.message
-  } else {
-    return code
-  }
-}
+import { AUTH_USER } from '../actions';
 
 const initialState = {
   token: undefined,
@@ -19,11 +11,6 @@ export default function authReducer(state = initialState, action) {
     case AUTH_USER:
       localStorage.setItem('token', action.payload);
       return { ...state, error: '', authenticated: true, token: action.payload };
-    case AUTH_ERROR:
-      let error = styleErrorCode(action.payload)
-      return { ...state, error };
-    case CLEAR_AUTH_ERROR:
-      return { ...state, error: undefined };
     default:
       return state;
   }

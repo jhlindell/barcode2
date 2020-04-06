@@ -2,15 +2,21 @@ import axios from "axios";
 import {
   AUTH_USER,
   SET_USERNAME,
-  AUTH_ERROR,
-  CLEAR_AUTH_ERROR,
   USER_LOGOUT,
   SIGNUP_ONCHANGE,
   CLEAR_SIGNUP,
   SET_SIGNUP_ERRORS,
   CLEAR_SIGNUP_ERRORS
 } from './types';
+import { addMessageToContainer, messageType } from '../../Messages/actions';
 const URL = process.env.REACT_APP_SERVER_URL;
+
+const styleErrorCode = (responseMessage) => {
+  if (responseMessage.includes('401')) {
+    return 'bad username or password';
+  }
+  return responseMessage;
+}
 
 export function signUpUser({ username, email, password }) {
   return function (dispatch) {
@@ -20,21 +26,13 @@ export function signUpUser({ username, email, password }) {
           dispatch({ type: AUTH_USER, payload: response.data.token });
           dispatch({ type: SET_USERNAME, payload: username })
         } else {
-          dispatch(authError(response.data.error));
+          dispatch(addMessageToContainer(response.data.error, messageType.ERROR));
         }
       })
       .catch((error) => {
-        dispatch(authError('duplicate username or email'));
+        dispatch(addMessageToContainer('duplicate username or email', messageType.ERROR));
       });
   }
-}
-
-export function authError(error) {
-  return { type: AUTH_ERROR, payload: error };
-}
-
-export function clearAuthError() {
-  return { type: CLEAR_AUTH_ERROR };
 }
 
 export function signInUser({ username, password }) {
@@ -45,7 +43,8 @@ export function signInUser({ username, password }) {
         dispatch({ type: SET_USERNAME, payload: username });
       })
       .catch((response) => {
-        dispatch(authError(response));
+        const errorMessage = styleErrorCode(response.message);
+        dispatch(addMessageToContainer(errorMessage, messageType.ERROR));
       });
   }
 }
