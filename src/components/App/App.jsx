@@ -7,6 +7,7 @@ import Signin from '../Login/components/SigninContainer';
 import Signup from '../Login/components/SignupContainer';
 import Messages from '../Messages/components/Messages';
 import StockItemList from '../StockItems/components/StockItemListContainer';
+import StockItemDetail from '../StockItems/components/StockItemDetailContainer';
 
 const useStyles = makeStyles({
   appRoot: {
@@ -26,6 +27,7 @@ function App() {
         <Route exact path='/' component={Home} />
 
         <Route exact path='/stockitems' component={StockItemList} />
+        <Route path='/stockitems/:id' component={StockItemDetail} />
       </Switch>
       <Messages />
     </div>

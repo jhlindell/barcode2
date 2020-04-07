@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { addMessageToContainer, messageType } from '../../Messages/actions';
+import { STOCK_ITEM_LIST, CLEAR_STOCK_ITEM_LIST } from './types';
 const URL = process.env.REACT_APP_SERVER_URL;
 
 export function getStockItemList(page, limit, search) {
@@ -12,7 +13,7 @@ export function getStockItemList(page, limit, search) {
 
     axios.get(`${URL}/api/stock_items${queryString}`)
       .then((response) => {
-        dispatch({ type: 'STOCK_ITEM_LIST', payload: response.data });
+        dispatch({ type: STOCK_ITEM_LIST, payload: response.data });
       })
       .catch((error) => {
         let err = error.toString();
@@ -22,5 +23,5 @@ export function getStockItemList(page, limit, search) {
 }
 
 export function clearStockItemList() {
-  return { type: 'CLEAR_STOCK_ITEM_LIST' };
+  return { type: CLEAR_STOCK_ITEM_LIST };
 }

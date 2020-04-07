@@ -9,8 +9,14 @@ import { BrowserRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import theme from './theme';
 import reducers from './reducers';
+import logger from 'redux-logger';
 
-const store = createStore(reducers, applyMiddleware(thunk));
+const middleWares = [
+  thunk,
+  logger
+];
+
+const store = createStore(reducers, applyMiddleware(...middleWares));
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>

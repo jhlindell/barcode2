@@ -1,12 +1,27 @@
 import axios from 'axios';
 import { addMessageToContainer, messageType } from '../../Messages/actions';
+import {
+  LOAD_STOCK_ITEM_BEGIN,
+  LOAD_STOCK_ITEM_SUCCESS,
+  LOAD_STOCK_ITEM_FAILURE,
+  CLEAR_STOCK_ITEM
+} from './types';
 const URL = process.env.REACT_APP_SERVER_URL;
 
-export function getStockItemById(id, failure) {
+export const loadStockItemBegin = () => ({ type: LOAD_STOCK_ITEM_BEGIN });
+export const loadStockItemSuccess = data => ({
+  type: LOAD_STOCK_ITEM_SUCCESS,
+  payload: data
+});
+export const loadStockItemFailure = () => ({ type: LOAD_STOCK_ITEM_FAILURE });
+export const clearStockItem = () => ({ type: CLEAR_STOCK_ITEM });
+
+export function getStockItemById(id) {
   return function (dispatch) {
+    dispatch(loadStockItemBegin());
     axios.get(`${URL}/api/stock_items/${id}`)
       .then((response) => {
-        dispatch({ type: 'SINGLE_STOCK_ITEM', payload: response.data });
+        dispatch(loadStockItemSuccess(response.data));
       })
       .catch((error) => {
         let err = error.toString();
@@ -14,13 +29,9 @@ export function getStockItemById(id, failure) {
           err = '404. cannot find ingredient with that id';
         }
         dispatch(addMessageToContainer(err, messageType.ERROR));
-        failure();
+        dispatch(loadStockItemFailure());
       });
   }
-}
-
-export function clearSingleStockItem() {
-  return { type: 'CLEAR_SINGLE_STOCK_ITEM' };
 }
 
 export function createStockItem(item, success) {

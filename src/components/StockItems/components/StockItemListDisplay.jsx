@@ -17,7 +17,7 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import theme from '../../../theme';
 
 const useStyles = makeStyles({
@@ -128,12 +128,16 @@ function StockItemListDisplay(props) {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {stockItemList.docs.map((row) => (
-                        <StyledTableRow key={row.name + row.description}>
-                          <TableCell component="th" scope="row">{row.name}</TableCell>
-                          <TableCell>{row.description}</TableCell>
-                        </StyledTableRow>
-                      ))}
+                      {stockItemList.docs.map((row) => {
+                        const linkUrl = `/stockitems/${row._id}`;
+                        return (
+                          <StyledTableRow key={row.name + row.description}>
+                            <TableCell component="th" scope="row"><Link to={linkUrl}>{row.name}</Link></TableCell>
+                            <TableCell>{row.description}</TableCell>
+                          </StyledTableRow>
+                        )
+                      }
+                      )}
                     </TableBody>
                     <TableFooter>
                       <TableRow>
