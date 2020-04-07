@@ -1,6 +1,6 @@
 import { ADD_MESSAGE, CLEAR_MESSAGE } from '../actions';
 
-export default function messageReducer(state = [], action) {
+export function messageReducer(state = [], action) {
   switch (action.type) {
     case ADD_MESSAGE:
       const message = action.payload;

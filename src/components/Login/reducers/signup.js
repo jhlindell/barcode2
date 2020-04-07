@@ -18,7 +18,7 @@ const initialState = {
   }
 };
 
-export default function signupReducer(state = initialState, action) {
+export function signupReducer(state = initialState, action) {
   switch (action.type) {
     case SIGNUP_ONCHANGE:
       return action.payload;

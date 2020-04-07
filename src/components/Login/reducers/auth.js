@@ -6,7 +6,7 @@ const initialState = {
   error: undefined
 }
 
-export default function authReducer(state = initialState, action) {
+export function authReducer(state = initialState, action) {
   switch (action.type) {
     case AUTH_USER:
       localStorage.setItem('token', action.payload);

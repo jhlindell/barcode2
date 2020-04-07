@@ -1,14 +1,16 @@
 import { combineReducers } from 'redux';
-import authReducer from '../components/Login/reducers/auth';
-import signupReducer from '../components/Login/reducers/signup';
-import usernameReducer from '../components/Login/reducers/userName';
-import messageReducer from '../components/Messages/reducers/message'
+import { authReducer, signupReducer, usernameReducer } from '../components/Login/reducers';
+import { messageReducer } from '../components/Messages/reducers';
+import { stockItemListReducer, stockItemReducer, newStockItemReducer } from '../components/StockItems/reducers';
 
 const appReducers = combineReducers({
   auth: authReducer,
   signup: signupReducer,
   username: usernameReducer,
-  messages: messageReducer
+  messages: messageReducer,
+  stockItemList: stockItemListReducer,
+  stockItem: stockItemReducer,
+  newStockItem: newStockItemReducer
 });
 
 const rootReducer = (state, action) => {
