@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { addMessageToContainer, messageType } from '../../Messages/actions';
+import { push } from 'connected-react-router'
 import {
   LOAD_STOCK_ITEM_BEGIN,
   LOAD_STOCK_ITEM_SUCCESS,
@@ -54,15 +55,18 @@ export function clearNewStockItem() {
   return { type: 'CLEAR_NEW_STOCK_ITEM' };
 }
 
-export function deleteStockItem(id, success) {
+export function deleteStockItem(id) {
   return function (dispatch, getState) {
     const { auth } = getState();
     axios.delete(`${URL}/api/stock_items/${id}`, { headers: { authorization: auth.token } })
       .then((response) => {
-        success();
+        dispatch(push('/stockitems'))
       })
       .catch((error) => {
         let err = error.toString();
+        if (err.includes('401')) {
+          err = 'You are not authorized to delete that item';
+        }
         dispatch(addMessageToContainer(err, messageType.ERROR));
       });
   }

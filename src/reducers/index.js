@@ -2,19 +2,21 @@ import { combineReducers } from 'redux';
 import { authReducer, signupReducer, usernameReducer } from '../components/Login/reducers';
 import { messageReducer } from '../components/Messages/reducers';
 import { stockItemListReducer, stockItemReducer, newStockItemReducer } from '../components/StockItems/reducers';
+import { connectRouter } from 'connected-react-router';
 
-const appReducers = combineReducers({
+const appReducers = (history) => combineReducers({
   auth: authReducer,
   signup: signupReducer,
   username: usernameReducer,
   messages: messageReducer,
   stockItemList: stockItemListReducer,
   stockItem: stockItemReducer,
-  newStockItem: newStockItemReducer
+  newStockItem: newStockItemReducer,
+  router: connectRouter(history)
 });
 
 const rootReducer = (state, action) => {
-  if (action.type === 'USER_LOGOUT') {
+  if (action && action.type && action.type === 'USER_LOGOUT') {
     state = undefined
   }
 

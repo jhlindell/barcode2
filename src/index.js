@@ -3,28 +3,26 @@ import ReactDOM from 'react-dom';
 import App from './components/App/App';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import thunk from 'redux-thunk';
+import { ConnectedRouter } from 'connected-react-router'
 import theme from './theme';
-import reducers from './reducers';
-import logger from 'redux-logger';
+import configureStore, { history } from './configureStore';
 
-const middleWares = [
-  thunk,
-  logger
-];
+const store = configureStore();
 
-const store = createStore(reducers, applyMiddleware(...middleWares));
+const token = localStorage.getItem('token');
+
+if (token) {
+  store.dispatch({ type: 'AUTH_USER', payload: token });
+}
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <Provider store={store}>
-      <BrowserRouter>
+      <ConnectedRouter history={history}>
         <App />
-      </BrowserRouter>
+      </ConnectedRouter>
     </Provider>
   </ThemeProvider>,
   document.getElementById('root')

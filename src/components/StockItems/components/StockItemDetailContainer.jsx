@@ -27,10 +27,15 @@ function StockItemDetailContainer() {
     history.push('/stockitems');
   }
 
+  function handleDelete(id) {
+    dispatch(deleteStockItem(id));
+  }
+
   return (
     <StockItemDetailDisplay
       stockItem={stockItem}
       goBack={goBack}
+      handleDelete={handleDelete}
     />
   );
 };

@@ -36,12 +36,19 @@ const useStyles = makeStyles({
   content: {
     display: 'flex',
     flexDirection: 'row'
+  },
+  deleteButton: {
+    color: theme.palette.getContrastText(theme.palette.error.main),
+    backgroundColor: theme.palette.error.main,
+    '&:hover': {
+      backgroundColor: theme.palette.error.hover
+    }
   }
 });
 
 function StockItemDetailDisplay(props) {
   const classes = useStyles();
-  const { stockItem, goBack } = props;
+  const { stockItem, goBack, handleDelete } = props;
 
   return (
     <div className={classes.cardContainer}>
@@ -67,6 +74,15 @@ function StockItemDetailDisplay(props) {
               onClick={() => goBack()}
             >
               Go back
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => handleDelete(stockItem.current._id)}
+              classes={{
+                root: classes.deleteButton
+              }}
+            >
+              Delete
             </Button>
           </CardActions>
         </Card>

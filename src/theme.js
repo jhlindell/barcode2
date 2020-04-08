@@ -16,6 +16,7 @@ const theme = createMuiTheme({
     },
     error: {
       main: red[400],
+      hover: red[700]
     },
     warning: {
       main: orange[500],
