@@ -7,13 +7,15 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router'
 import theme from './theme';
 import configureStore, { history } from './configureStore';
+import { AUTH_USER, getUserName } from './components/Login/actions'
 
 const store = configureStore();
 
 const token = localStorage.getItem('token');
 
 if (token) {
-  store.dispatch({ type: 'AUTH_USER', payload: token });
+  store.dispatch({ type: AUTH_USER, payload: token });
+  store.dispatch(getUserName());
 }
 
 ReactDOM.render(

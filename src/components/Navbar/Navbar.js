@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -6,8 +6,8 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Button,
 } from '@material-ui/core';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useHistory } from 'react-router-dom';
@@ -47,60 +47,74 @@ function Navbar() {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
   const username = useSelector(state => state.username);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [navAnchorEl, setNavAnchorEl] = React.useState(null);
+  const [userAnchorEl, setUserAnchorEl] = React.useState(null);
 
-  const handleMenuClick = event => {
-    setAnchorEl(event.currentTarget);
+  useEffect(() => {
+
+  });
+
+  function handleNavMenuClick(event) {
+    setNavAnchorEl(event.currentTarget);
   };
 
-  const handleCloseMenu = () => {
-    setAnchorEl(null);
+  function handleCloseNavMenu() {
+    setNavAnchorEl(null);
   };
 
-  const handleHomeClick = () => {
-    setAnchorEl(null);
+  function handleHomeClick() {
+    setNavAnchorEl(null);
     history.push('/');
   };
 
-  const handleIngredientClick = () => {
-    setAnchorEl(null);
+  function handleIngredientClick() {
+    setNavAnchorEl(null);
     history.push('/stockitems');
   }
 
-  const handleLogoutClick = () => {
+  function handleRecipesClick() {
+    setNavAnchorEl(null);
+    history.push('/recipes');
+  }
+
+  function handleUserMenuClick(event) {
+    setUserAnchorEl(event.currentTarget);
+  };
+
+  function handleCloseUserMenu() {
+    setUserAnchorEl(null);
+  };
+
+  function handleLogoutClick() {
+    setUserAnchorEl(null);
     dispatch(signoutUser());
   }
 
-  const handleLoginClick = () => {
+  function handleLoginClick() {
+    setUserAnchorEl(null);
     history.push('/signin');
   }
 
-  const handleSignupClick = () => {
+  function handleSignupClick() {
+    setUserAnchorEl(null);
     history.push('/signup');
   }
 
-  const renderLoginButton = () => {
+  function renderUserMenuItems() {
     if (auth && auth.authenticated) {
       return (
-        <Button variant="contained" onClick={handleLogoutClick}>
-          Log Out
-        </Button>
+        <div>
+          <MenuItem>{username}</MenuItem>
+          <MenuItem onClick={handleLogoutClick}>LogOut</MenuItem>
+        </div>
       );
     }
     return (
       <div>
-        <Button
-          variant="contained"
-          onClick={handleLoginClick}
-          className={classes.button}
-        >
-          Log In
-        </Button>
-        <Button variant="contained" onClick={handleSignupClick}>
-          Sign up
-        </Button>
+        <MenuItem onClick={handleLoginClick}>Sign In</MenuItem>
+        <MenuItem onClick={handleSignupClick}>Sign Up</MenuItem>
       </div>
-    )
+    );
   };
 
   return (
@@ -112,16 +126,16 @@ function Navbar() {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
-            onClick={handleMenuClick}
+            onClick={handleNavMenuClick}
           >
             <MenuIcon />
           </IconButton>
           <Menu
             id="menu"
-            anchorEl={anchorEl}
+            anchorEl={navAnchorEl}
             keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleCloseMenu}
+            open={Boolean(navAnchorEl)}
+            onClose={handleCloseNavMenu}
           >
             <MenuItem onClick={handleHomeClick}>
               Home
@@ -129,16 +143,42 @@ function Navbar() {
             <MenuItem onClick={handleIngredientClick}>
               Ingredients
             </MenuItem>
+            <MenuItem onClick={handleRecipesClick}>
+              Recipes
+            </MenuItem>
           </Menu>
           <Typography variant="h4" className={classes.title}>
             BarCode
           </Typography>
-          {username ?
-            <Typography variant="h6" className={classes.username}>
-              Hi {username}
-            </Typography>
-            : null}
-          {renderLoginButton()}
+          <div>
+            <IconButton
+              aria-label="user account"
+              aria-controls="menu-user"
+              aria-haspopup="true"
+              onClick={handleUserMenuClick}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id="menu-user"
+              anchorEl={userAnchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(userAnchorEl)}
+              onClose={handleCloseUserMenu}
+            >
+              {renderUserMenuItems()}
+            </Menu>
+          </div>
+
         </Toolbar>
       </AppBar>
     </div>

@@ -35,8 +35,9 @@ export function signInUser({ username, password }) {
   return function (dispatch) {
     axios.post(`${URL}/signin`, { username, password })
       .then(response => {
+        const capString = username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
         dispatch({ type: AUTH_USER, payload: response.data.token });
-        dispatch({ type: SET_USERNAME, payload: username });
+        dispatch({ type: SET_USERNAME, payload: capString });
       })
       .catch((response) => {
         let errorMessage = response.message;
