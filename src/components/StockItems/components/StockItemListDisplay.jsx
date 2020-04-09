@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
-  Button,
   Card,
   CardContent,
   CardHeader,
+  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -15,8 +15,11 @@ import {
   TableRow,
   Paper,
   TextField,
+  Tooltip,
   Typography
 } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search'
+import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import { useHistory } from 'react-router-dom';
 import theme from '../../../theme';
 
@@ -36,18 +39,22 @@ const useStyles = makeStyles({
   headerDiv: {
     padding: 10,
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   title: {
     marginLeft: 20
   },
+  searchButton: {
+    backgroundColor: theme.palette.secondary.main,
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.hover
+    },
+    marginLeft: 10
+  },
   searchGroup: {
-    marginRight: 6,
     display: 'flex',
     alignItems: 'center'
-  },
-  searchGroupSpacing: {
-    marginRight: 10
   }
 });
 
@@ -85,34 +92,53 @@ function StockItemListDisplay(props) {
         </div>
         <div className={classes.searchGroup}>
           <TextField
+            placeholder="Search"
+            variant="outlined"
+            margin="dense"
             value={searchBox}
-            error={undefined}
             onChange={handleSearchBoxChange}
-            label="Search Ingredients"
-            className={classes.searchGroupSpacing}
+            label="Search"
+            onKeyDown={onKeyDown}
           />
-          <Button
-            variant="contained"
-            onClick={handleSearchBoxSubmit}
-            color="secondary"
-            className={classes.searchGroupSpacing}
-          >
-            Search
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleNewItemClick}
-          >
-            New Ingredient
-          </Button>
+          <Tooltip title="Submit Search">
+            <IconButton
+              onClick={handleSearchBoxSubmit}
+              classes={{
+                root: classes.searchButton
+              }}
+              size="small"
+            >
+              <SearchIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="New Ingredient">
+            <IconButton
+              onClick={handleNewItemClick}
+              size="small"
+              classes={{
+                root: classes.searchButton
+              }}
+            >
+              <AddOutlinedIcon />
+            </IconButton>
+          </Tooltip>
+
         </div>
+
       </div>
     )
   }
 
   function itemRedirect(id) {
     history.push(`/stockitems/${id}`);
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Enter' || event.key === 'NumpadEnter') {
+      event.preventDefault();
+      event.stopPropagation();
+      handleSearchBoxSubmit();
+    }
   }
 
   return (
@@ -127,7 +153,7 @@ function StockItemListDisplay(props) {
               />
               <CardContent>
                 <TableContainer component={Paper}>
-                  <Table fixedHeader={false} style={{ width: "auto", tableLayout: "auto" }} aria-label="stock item list">
+                  <Table aria-label="stock item list">
                     <TableHead className={classes.tableHeader}>
                       <TableRow>
                         <TableCell>

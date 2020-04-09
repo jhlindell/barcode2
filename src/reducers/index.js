@@ -14,14 +14,4 @@ const appReducers = (history) => combineReducers({
   router: connectRouter(history)
 });
 
-// const rootReducer = (state, action) => {
-//   if (action && action.type && action.type === 'USER_LOGOUT') {
-//     state = undefined;
-//     localStorage.removeItem('token');
-//     return state;
-//   }
-
-//   return appReducers(state, action)
-// }
-
 export default appReducers;
