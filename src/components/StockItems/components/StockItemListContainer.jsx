@@ -11,6 +11,7 @@ function StockItemListContainer() {
   const dispatch = useDispatch();
   const history = useHistory();
   const stockItemList = useSelector(state => state.stockItemList);
+  const auth = useSelector(state => state.auth);
 
   useEffect(() => {
     dispatch(getStockItemList(activePage, itemsPerPage, searchBox));
@@ -53,6 +54,7 @@ function StockItemListContainer() {
       handleSearchBoxChange={handleSearchBoxChange}
       handleSearchBoxSubmit={handleSearchBoxSubmit}
       handleNewItemClick={handleNewItemClick}
+      auth={auth}
     />
   );
 };

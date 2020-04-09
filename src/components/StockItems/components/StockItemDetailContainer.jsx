@@ -9,6 +9,7 @@ function StockItemDetailContainer() {
   const dispatch = useDispatch();
   const history = useHistory();
   const stockItem = useSelector(state => state.stockItem);
+  const auth = useSelector(state => state.auth);
   let mountedRef = useRef(false);
 
   useEffect(() => {
@@ -41,6 +42,7 @@ function StockItemDetailContainer() {
       goBack={goBack}
       handleDelete={handleDelete}
       handleEdit={handleEdit}
+      auth={auth}
     />
   );
 };

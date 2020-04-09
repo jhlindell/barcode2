@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import bottle from '../../../bottle.jpeg';
 import {
   Button,
@@ -59,7 +59,8 @@ function StockItemDetailDisplay(props) {
     stockItem,
     goBack,
     handleDelete,
-    handleEdit
+    handleEdit,
+    auth
   } = props;
 
   return (
@@ -87,24 +88,29 @@ function StockItemDetailDisplay(props) {
             >
               Go back
             </Button>
-            <Button
-              variant="contained"
-              onClick={handleDelete}
-              classes={{
-                root: classes.deleteButton
-              }}
-            >
-              Delete
-            </Button>
-            <Button
-              variant="contained"
-              onClick={handleEdit}
-              classes={{
-                root: classes.editButton
-              }}
-            >
-              Edit
-            </Button>
+            {auth && auth.authenticated ?
+              <Fragment>
+                <Button
+                  variant="contained"
+                  onClick={handleDelete}
+                  classes={{
+                    root: classes.deleteButton
+                  }}
+                >
+                  Delete
+              </Button>
+                <Button
+                  variant="contained"
+                  onClick={handleEdit}
+                  classes={{
+                    root: classes.editButton
+                  }}
+                >
+                  Edit
+              </Button>
+              </Fragment>
+              : null
+            }
           </CardActions>
         </Card>
       ) : null

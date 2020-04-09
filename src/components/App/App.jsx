@@ -10,6 +10,7 @@ import StockItemList from '../StockItems/components/StockItemListContainer';
 import StockItemDetail from '../StockItems/components/StockItemDetailContainer';
 import StockItemCreate from '../StockItems/components/StockItemCreate';
 import StockItemEdit from '../StockItems/components/StockItemEdit';
+import PrivateRoute from '../utils/PrivateRoute';
 
 const useStyles = makeStyles({
   appRoot: {
@@ -27,8 +28,8 @@ function App() {
         <Route path='/signin' component={Signin} />
         <Route path='/signup' component={Signup} />
 
-        <Route exact path='/stockitems/edit/:id' component={StockItemEdit} />
-        <Route exact path='/stockitems/create' component={StockItemCreate} />
+        <Route exact path='/stockitems/edit/:id' component={PrivateRoute(StockItemEdit)} />
+        <Route exact path='/stockitems/create' component={PrivateRoute(StockItemCreate)} />
         <Route exact path='/stockitems' component={StockItemList} />
         <Route path='/stockitems/:id' component={StockItemDetail} />
 

@@ -43,7 +43,7 @@ const useStyles = makeStyles({
     alignItems: 'center'
   },
   title: {
-    marginLeft: 20
+    marginLeft: 6
   },
   searchButton: {
     backgroundColor: theme.palette.secondary.main,
@@ -54,7 +54,8 @@ const useStyles = makeStyles({
   },
   searchGroup: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingRight: 6
   }
 });
 
@@ -80,6 +81,7 @@ function StockItemListDisplay(props) {
     handleSearchBoxChange,
     handleSearchBoxSubmit,
     handleNewItemClick,
+    auth
   } = props;
 
   function renderHeaderNode() {
@@ -111,20 +113,21 @@ function StockItemListDisplay(props) {
               <SearchIcon />
             </IconButton>
           </Tooltip>
-          <Tooltip title="New Ingredient">
-            <IconButton
-              onClick={handleNewItemClick}
-              size="small"
-              classes={{
-                root: classes.searchButton
-              }}
-            >
-              <AddOutlinedIcon />
-            </IconButton>
-          </Tooltip>
-
+          {auth && auth.authenticated ?
+            <Tooltip title="New Ingredient">
+              <IconButton
+                onClick={handleNewItemClick}
+                size="small"
+                classes={{
+                  root: classes.searchButton
+                }}
+              >
+                <AddOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+            : null
+          }
         </div>
-
       </div>
     )
   }
