@@ -1,22 +1,18 @@
 import axios from "axios";
 import {
   AUTH_USER,
+  UNAUTH_USER,
   SET_USERNAME,
-  USER_LOGOUT,
+  CLEAR_USERNAME,
   SIGNUP_ONCHANGE,
   CLEAR_SIGNUP,
   SET_SIGNUP_ERRORS,
   CLEAR_SIGNUP_ERRORS
 } from './types';
+import { CLEAR_STOCK_ITEM_LIST } from '../../StockItems/actions';
 import { addMessageToContainer, messageType } from '../../Messages/actions';
+import { push } from 'connected-react-router';
 const URL = process.env.REACT_APP_SERVER_URL;
-
-const styleErrorCode = (responseMessage) => {
-  if (responseMessage.includes('401')) {
-    return 'bad username or password';
-  }
-  return responseMessage;
-}
 
 export function signUpUser({ username, email, password }) {
   return function (dispatch) {
@@ -30,7 +26,7 @@ export function signUpUser({ username, email, password }) {
         }
       })
       .catch((error) => {
-        dispatch(addMessageToContainer('duplicate username or email', messageType.ERROR));
+        dispatch(addMessageToContainer('Duplicate username or email', messageType.ERROR));
       });
   }
 }
@@ -43,15 +39,23 @@ export function signInUser({ username, password }) {
         dispatch({ type: SET_USERNAME, payload: username });
       })
       .catch((response) => {
-        const errorMessage = styleErrorCode(response.message);
+        let errorMessage = response.message;
+        if (errorMessage.includes('401')) {
+          errorMessage = 'Bad username or password';
+        }
         dispatch(addMessageToContainer(errorMessage, messageType.ERROR));
       });
   }
 }
 
 export function signoutUser() {
-  localStorage.removeItem('token');
-  return { type: USER_LOGOUT };
+  return function (dispatch) {
+    localStorage.removeItem('token');
+    dispatch({ type: CLEAR_USERNAME });
+    dispatch({ type: UNAUTH_USER });
+    dispatch({ type: CLEAR_STOCK_ITEM_LIST });
+    dispatch(push('/'));
+  }
 }
 
 export function getUserName() {

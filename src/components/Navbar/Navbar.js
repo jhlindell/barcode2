@@ -59,8 +59,13 @@ function Navbar() {
 
   const handleHomeClick = () => {
     setAnchorEl(null);
-    history.push('/home');
+    history.push('/');
   };
+
+  const handleIngredientClick = () => {
+    setAnchorEl(null);
+    history.push('/stockitems');
+  }
 
   const handleLogoutClick = () => {
     dispatch(signoutUser());
@@ -118,7 +123,12 @@ function Navbar() {
             open={Boolean(anchorEl)}
             onClose={handleCloseMenu}
           >
-            <MenuItem onClick={handleHomeClick}>Home</MenuItem>
+            <MenuItem onClick={handleHomeClick}>
+              Home
+            </MenuItem>
+            <MenuItem onClick={handleIngredientClick}>
+              Ingredients
+            </MenuItem>
           </Menu>
           <Typography variant="h4" className={classes.title}>
             BarCode
