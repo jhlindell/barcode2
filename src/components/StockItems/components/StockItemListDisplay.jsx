@@ -17,7 +17,7 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import theme from '../../../theme';
 
 const useStyles = makeStyles({
@@ -46,13 +46,14 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center'
   },
-  searchField: {
+  searchGroupSpacing: {
     marginRight: 10
   }
 });
 
 const StyledTableRow = withStyles({
   root: {
+    cursor: 'pointer',
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.tableRowHighlight
     },
@@ -61,6 +62,7 @@ const StyledTableRow = withStyles({
 
 function StockItemListDisplay(props) {
   const classes = useStyles();
+  const history = useHistory();
   const {
     stockItemList,
     handlePageChange,
@@ -69,7 +71,8 @@ function StockItemListDisplay(props) {
     handleItemsPerPageChange,
     searchBox,
     handleSearchBoxChange,
-    handleSearchBoxSubmit
+    handleSearchBoxSubmit,
+    handleNewItemClick,
   } = props;
 
   function renderHeaderNode() {
@@ -86,18 +89,30 @@ function StockItemListDisplay(props) {
             error={undefined}
             onChange={handleSearchBoxChange}
             label="Search Ingredients"
-            className={classes.searchField}
+            className={classes.searchGroupSpacing}
           />
           <Button
             variant="contained"
             onClick={handleSearchBoxSubmit}
             color="secondary"
+            className={classes.searchGroupSpacing}
           >
-            Submit
+            Search
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleNewItemClick}
+          >
+            New Ingredient
           </Button>
         </div>
       </div>
     )
+  }
+
+  function itemRedirect(id) {
+    history.push(`/stockitems/${id}`);
   }
 
   return (
@@ -112,7 +127,7 @@ function StockItemListDisplay(props) {
               />
               <CardContent>
                 <TableContainer component={Paper}>
-                  <Table aria-label="stock item list">
+                  <Table fixedHeader={false} style={{ width: "auto", tableLayout: "auto" }} aria-label="stock item list">
                     <TableHead className={classes.tableHeader}>
                       <TableRow>
                         <TableCell>
@@ -128,16 +143,15 @@ function StockItemListDisplay(props) {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {stockItemList.docs.map((row) => {
-                        const linkUrl = `/stockitems/${row._id}`;
-                        return (
-                          <StyledTableRow key={row.name + row.description}>
-                            <TableCell component="th" scope="row"><Link to={linkUrl}>{row.name}</Link></TableCell>
-                            <TableCell>{row.description}</TableCell>
-                          </StyledTableRow>
-                        )
-                      }
-                      )}
+                      {stockItemList.docs.map((row) => (
+                        <StyledTableRow
+                          key={row.name + row.description}
+                          onClick={() => itemRedirect(row._id)}
+                        >
+                          <TableCell component="th" scope="row">{row.name}</TableCell>
+                          <TableCell>{row.description}</TableCell>
+                        </StyledTableRow>
+                      ))}
                     </TableBody>
                     <TableFooter>
                       <TableRow>

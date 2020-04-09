@@ -27,8 +27,12 @@ function StockItemDetailContainer() {
     history.push('/stockitems');
   }
 
-  function handleDelete(id) {
-    dispatch(deleteStockItem(id));
+  function handleDelete() {
+    dispatch(deleteStockItem(stockItem.current._id));
+  }
+
+  function handleEdit() {
+    history.push(`/stockitems/edit/${stockItem.current._id}`)
   }
 
   return (
@@ -36,6 +40,7 @@ function StockItemDetailContainer() {
       stockItem={stockItem}
       goBack={goBack}
       handleDelete={handleDelete}
+      handleEdit={handleEdit}
     />
   );
 };

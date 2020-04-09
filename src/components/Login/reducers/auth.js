@@ -11,6 +11,9 @@ export function authReducer(state = initialState, action) {
     case AUTH_USER:
       localStorage.setItem('token', action.payload);
       return { ...state, error: '', authenticated: true, token: action.payload };
+    case 'UNAUTH_USER':
+      localStorage.removeItem('token');
+      return initialState;
     default:
       return state;
   }

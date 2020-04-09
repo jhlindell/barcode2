@@ -1,5 +1,7 @@
 export const AUTH_USER = 'AUTH_USER';
+export const UNAUTH_USER = 'UNAUTH_USER';
 export const SET_USERNAME = 'SET_USERNAME';
+export const CLEAR_USERNAME = 'CLEAR_USERNAME';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const SIGNUP_ONCHANGE = 'SIGNUP_ONCHANGE';
 export const CLEAR_SIGNUP = 'CLEAR_SIGNUP';

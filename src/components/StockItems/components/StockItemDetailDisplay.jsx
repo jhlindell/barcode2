@@ -43,12 +43,24 @@ const useStyles = makeStyles({
     '&:hover': {
       backgroundColor: theme.palette.error.hover
     }
+  },
+  editButton: {
+    color: theme.palette.getContrastText(theme.palette.warning.main),
+    backgroundColor: theme.palette.warning.main,
+    '&:hover': {
+      backgroundColor: theme.palette.warning.hover
+    }
   }
 });
 
 function StockItemDetailDisplay(props) {
   const classes = useStyles();
-  const { stockItem, goBack, handleDelete } = props;
+  const {
+    stockItem,
+    goBack,
+    handleDelete,
+    handleEdit
+  } = props;
 
   return (
     <div className={classes.cardContainer}>
@@ -77,12 +89,21 @@ function StockItemDetailDisplay(props) {
             </Button>
             <Button
               variant="contained"
-              onClick={() => handleDelete(stockItem.current._id)}
+              onClick={handleDelete}
               classes={{
                 root: classes.deleteButton
               }}
             >
               Delete
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleEdit}
+              classes={{
+                root: classes.editButton
+              }}
+            >
+              Edit
             </Button>
           </CardActions>
         </Card>

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { authReducer, signupReducer, usernameReducer } from '../components/Login/reducers';
 import { messageReducer } from '../components/Messages/reducers';
-import { stockItemListReducer, stockItemReducer, newStockItemReducer } from '../components/StockItems/reducers';
+import { stockItemListReducer, stockItemReducer } from '../components/StockItems/reducers';
 import { connectRouter } from 'connected-react-router';
 
 const appReducers = (history) => combineReducers({
@@ -11,16 +11,17 @@ const appReducers = (history) => combineReducers({
   messages: messageReducer,
   stockItemList: stockItemListReducer,
   stockItem: stockItemReducer,
-  newStockItem: newStockItemReducer,
   router: connectRouter(history)
 });
 
-const rootReducer = (state, action) => {
-  if (action && action.type && action.type === 'USER_LOGOUT') {
-    state = undefined
-  }
+// const rootReducer = (state, action) => {
+//   if (action && action.type && action.type === 'USER_LOGOUT') {
+//     state = undefined;
+//     localStorage.removeItem('token');
+//     return state;
+//   }
 
-  return appReducers(state, action)
-}
+//   return appReducers(state, action)
+// }
 
-export default rootReducer;
+export default appReducers;

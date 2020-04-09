@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStockItemList, clearStockItemList } from '../actions/stockItemListActions';
 import StockItemListDisplay from './StockItemListDisplay';
+import { useHistory } from 'react-router-dom';
 
 function StockItemListContainer() {
   const [activePage, setActivePage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [searchBox, setSearchBox] = useState('');
   const dispatch = useDispatch();
+  const history = useHistory();
   const stockItemList = useSelector(state => state.stockItemList);
 
   useEffect(() => {
@@ -36,6 +38,10 @@ function StockItemListContainer() {
     dispatch(getStockItemList(0, itemsPerPage, searchBox));
   }
 
+  function handleNewItemClick() {
+    history.push('/stockitems/create');
+  }
+
   return (
     <StockItemListDisplay
       stockItemList={stockItemList}
@@ -46,6 +52,7 @@ function StockItemListContainer() {
       searchBox={searchBox}
       handleSearchBoxChange={handleSearchBoxChange}
       handleSearchBoxSubmit={handleSearchBoxSubmit}
+      handleNewItemClick={handleNewItemClick}
     />
   );
 };

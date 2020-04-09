@@ -44,10 +44,10 @@ function SignupContainer(props) {
   function validate() {
     dispatch(clearSignupErrors());
     const errors = {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      username: undefined,
+      email: undefined,
+      password: undefined,
+      confirmPassword: undefined,
     };
     let isValid = true;
 
@@ -73,6 +73,7 @@ function SignupContainer(props) {
 
     if (signup.password !== signup.confirmPassword) {
       errors.password = 'Passwords must match';
+      errors.confirmPassword = 'Passwords must match';
       isValid = false;
     }
 

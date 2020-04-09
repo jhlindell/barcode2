@@ -20,6 +20,7 @@ const theme = createMuiTheme({
     },
     warning: {
       main: orange[500],
+      hover: orange[700]
     },
     success: {
       main: green[500],

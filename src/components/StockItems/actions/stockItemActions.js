@@ -1,11 +1,15 @@
 import axios from 'axios';
 import { addMessageToContainer, messageType } from '../../Messages/actions';
-import { push } from 'connected-react-router'
+import { push } from 'connected-react-router';
 import {
   LOAD_STOCK_ITEM_BEGIN,
   LOAD_STOCK_ITEM_SUCCESS,
   LOAD_STOCK_ITEM_FAILURE,
-  CLEAR_STOCK_ITEM
+  CLEAR_STOCK_ITEM,
+  INITIALIZE_NEW_STOCK_ITEM,
+  ON_STOCK_ITEM_CHANGE,
+  SET_STOCK_ITEM_VALIDATION_ERRORS,
+  CLEAR_STOCK_ITEM_VALIDATION_ERRORS
 } from './types';
 const URL = process.env.REACT_APP_SERVER_URL;
 
@@ -35,24 +39,22 @@ export function getStockItemById(id) {
   }
 }
 
-export function createStockItem(item, success) {
+export function createStockItem(item) {
   return function (dispatch, getState) {
     const { auth } = getState();
     axios.post(`${URL}/api/stock_items/`, item, { headers: { authorization: auth.token } })
       .then((response) => {
-        dispatch({ type: 'NEW_STOCK_ITEM', payload: response.data });
         dispatch(addMessageToContainer('Item created successfully!', messageType.SUCCESS));
-        success();
+        dispatch(push(`/stockitems/${response.data._id}`));
       })
       .catch((error) => {
         let err = error.toString();
+        if (err.includes('401')) {
+          err = 'You must be logged in to create an item'
+        }
         dispatch(addMessageToContainer(err, messageType.ERROR));
       });
   }
-}
-
-export function clearNewStockItem() {
-  return { type: 'CLEAR_NEW_STOCK_ITEM' };
 }
 
 export function deleteStockItem(id) {
@@ -72,17 +74,36 @@ export function deleteStockItem(id) {
   }
 }
 
-export function editStockItem(id, item, success, failure) {
+export function editStockItem(id, item) {
   return function (dispatch, getState) {
     const { auth } = getState();
     axios.put(`${URL}/api/stock_items/${id}`, item, { headers: { authorization: auth.token } })
       .then((response) => {
-        success();
+        dispatch(push(`/stockitems/${id}`));
       })
       .catch((error) => {
         let err = error.toString();
+        if (err.includes('401')) {
+          err = 'You are not authorized to edit that item';
+        }
         dispatch(addMessageToContainer(err, messageType.ERROR));
-        failure();
+        dispatch(push(`/stockitems/${id}`));
       });
   }
+}
+
+export function initializeNewStockItem() {
+  return { type: INITIALIZE_NEW_STOCK_ITEM };
+}
+
+export function stockItemOnChange(item) {
+  return { type: ON_STOCK_ITEM_CHANGE, payload: item };
+}
+
+export function setValidationErrors(errors) {
+  return { type: SET_STOCK_ITEM_VALIDATION_ERRORS, payload: errors };
+}
+
+export function clearValidationErrors() {
+  return { type: CLEAR_STOCK_ITEM_VALIDATION_ERRORS };
 }

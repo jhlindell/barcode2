@@ -1,5 +1,4 @@
 import React from 'react';
-import TextField from '../../commonComponents/TextField';
 import TermsOfService from './TermsOfService';
 import {
   Card,
@@ -7,8 +6,10 @@ import {
   CardHeader,
   CardActions,
   Button,
+  TextField
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import theme from '../../../theme';
 
 const useStyles = makeStyles({
   field: {
@@ -31,7 +32,7 @@ const useStyles = makeStyles({
   },
   cardHeader: {
     textAlign: 'center',
-    backgroundColor: 'lightgray'
+    backgroundColor: theme.palette.background.header
   },
   cardActions: {
     justifyContent: 'center'
@@ -52,23 +53,23 @@ function SignupForm(props) {
   } = props;
   const { username, password, email, errors, confirmPassword } = signup;
 
-  const usernameOnChange = newValue => {
-    const newSignup = { ...signup, username: newValue };
+  const usernameOnChange = event => {
+    const newSignup = { ...signup, username: event.target.value };
     onChange(newSignup);
   }
 
-  const emailOnChange = newValue => {
-    const newSignup = { ...signup, email: newValue };
+  const emailOnChange = event => {
+    const newSignup = { ...signup, email: event.target.value };
     onChange(newSignup);
   }
 
-  const passwordOnChange = newValue => {
-    const newSignup = { ...signup, password: newValue };
+  const passwordOnChange = event => {
+    const newSignup = { ...signup, password: event.target.value };
     onChange(newSignup);
   }
 
-  const confirmPasswordOnChange = newValue => {
-    const newSignup = { ...signup, confirmPassword: newValue };
+  const confirmPasswordOnChange = event => {
+    const newSignup = { ...signup, confirmPassword: event.target.value };
     onChange(newSignup);
   }
 
@@ -94,31 +95,37 @@ function SignupForm(props) {
               <div className={classes.formContainer} onKeyDown={onKeyDown}>
                 <TextField
                   value={username}
-                  error={errors.username}
+                  error={errors.username !== undefined}
                   label="Username"
                   className={classes.field}
                   onChange={usernameOnChange}
+                  helperText={errors.username}
                 />
                 <TextField
                   value={email}
-                  error={errors.email}
+                  error={errors.email !== undefined}
                   label="Email"
                   className={classes.field}
                   onChange={emailOnChange}
+                  helperText={errors.email}
                 />
                 <TextField
                   value={password}
-                  error={errors.password}
+                  error={errors.password !== undefined}
                   label="Password"
                   className={classes.field}
                   onChange={passwordOnChange}
+                  helperText={errors.password}
+                  type="password"
                 />
                 <TextField
                   value={confirmPassword}
-                  error={errors.confirmPassword}
+                  error={errors.confirmPassword !== undefined}
                   label="Confirm Password"
                   className={classes.field}
                   onChange={confirmPasswordOnChange}
+                  helperText={errors.confirmPassword}
+                  type="password"
                 />
               </div>
             </CardContent>
