@@ -9,4 +9,4 @@ export function stockItemListReducer(state = [], action) {
     default:
       return state;
   }
-}
+};

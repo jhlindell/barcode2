@@ -1,0 +1,2 @@
+export const RECIPE_LIST = 'RECIPE_LIST';
+export const CLEAR_RECIPE_LIST = 'CLEAR_RECIPE_LIST';
