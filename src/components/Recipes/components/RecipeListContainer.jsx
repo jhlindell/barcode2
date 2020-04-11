@@ -1,34 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStockItemList, clearStockItemList } from '../actions';
-import StockItemListDisplay from './StockItemListDisplay';
+import { getRecipeList, clearRecipeList } from '../actions';
+import RecipeListDisplay from './RecipeListDisplay';
 import { useHistory } from 'react-router-dom';
 
-function StockItemListContainer() {
+function RecipeListContainer() {
   const [activePage, setActivePage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [searchBox, setSearchBox] = useState('');
-  const dispatch = useDispatch();
   const history = useHistory();
-  const stockItemList = useSelector(state => state.stockItemList);
+  const dispatch = useDispatch();
+  const recipeList = useSelector(state => state.recipeList);
   const auth = useSelector(state => state.auth);
 
   useEffect(() => {
-    dispatch(getStockItemList(activePage, itemsPerPage, searchBox));
-    return () => dispatch(clearStockItemList());
+    dispatch(getRecipeList(activePage, itemsPerPage, searchBox));
+    return () => dispatch(clearRecipeList());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handlePageChange(event, newPageNumber) {
     setActivePage(newPageNumber);
-    dispatch(getStockItemList(newPageNumber, itemsPerPage, searchBox));
+    dispatch(getRecipeList(newPageNumber, itemsPerPage, searchBox));
   }
 
   function handleItemsPerPageChange(event) {
     const newItemsPerPage = event.target.value;
     setItemsPerPage(newItemsPerPage);
     setActivePage(0);
-    dispatch(getStockItemList(0, newItemsPerPage, searchBox));
+    dispatch(getRecipeList(0, newItemsPerPage, searchBox));
   }
 
   function handleSearchBoxChange(event) {
@@ -36,16 +36,18 @@ function StockItemListContainer() {
   }
 
   function handleSearchBoxSubmit() {
-    dispatch(getStockItemList(0, itemsPerPage, searchBox));
+    dispatch(getRecipeList(0, itemsPerPage, searchBox));
   }
 
-  function handleNewItemClick() {
-    history.push('/stockitems/create');
+  function handleNewRecipeClick() {
+    history.push('/recipes/create');
   }
+
+  console.log('recipelist container loaded');
 
   return (
-    <StockItemListDisplay
-      stockItemList={stockItemList}
+    <RecipeListDisplay
+      recipeList={recipeList}
       handlePageChange={handlePageChange}
       activePage={activePage}
       itemsPerPage={itemsPerPage}
@@ -53,11 +55,11 @@ function StockItemListContainer() {
       searchBox={searchBox}
       handleSearchBoxChange={handleSearchBoxChange}
       handleSearchBoxSubmit={handleSearchBoxSubmit}
-      handleNewItemClick={handleNewItemClick}
+      handleNewRecipeClick={handleNewRecipeClick}
       auth={auth}
       history={history}
     />
   );
 };
 
-export default StockItemListContainer;
+export default RecipeListContainer;

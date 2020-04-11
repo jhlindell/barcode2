@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import StockItemDetailDisplay from './StockItemDetailDisplay';
-import { getStockItemById, clearStockItem, deleteStockItem } from '../actions/stockItemActions';
+import { getStockItemById, clearStockItem, deleteStockItem } from '../actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 

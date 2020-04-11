@@ -67,10 +67,10 @@ const StyledTableRow = withStyles({
   }
 })(TableRow);
 
-function StockItemListDisplay(props) {
+function RecipeListDisplay(props) {
   const classes = useStyles();
   const {
-    stockItemList,
+    recipeList,
     handlePageChange,
     activePage,
     itemsPerPage,
@@ -78,7 +78,7 @@ function StockItemListDisplay(props) {
     searchBox,
     handleSearchBoxChange,
     handleSearchBoxSubmit,
-    handleNewItemClick,
+    handleNewRecipeClick,
     auth,
     history
   } = props;
@@ -88,7 +88,7 @@ function StockItemListDisplay(props) {
       <div className={classes.headerDiv}>
         <div className={classes.title}>
           <Typography variant='h4'>
-            Ingredients
+            Recipes
           </Typography>
         </div>
         <div className={classes.searchGroup}>
@@ -113,9 +113,9 @@ function StockItemListDisplay(props) {
             </IconButton>
           </Tooltip>
           {auth && auth.authenticated ?
-            <Tooltip title="New Ingredient">
+            <Tooltip title="New Recipe">
               <IconButton
-                onClick={handleNewItemClick}
+                onClick={handleNewRecipeClick}
                 size="small"
                 classes={{
                   root: classes.searchButton
@@ -131,8 +131,8 @@ function StockItemListDisplay(props) {
     )
   }
 
-  function itemRedirect(id) {
-    history.push(`/stockitems/${id}`);
+  function recipeRedirect(id) {
+    history.push(`/recipes/${id}`);
   }
 
   function onKeyDown(event) {
@@ -145,7 +145,7 @@ function StockItemListDisplay(props) {
 
   return (
     <Fragment>
-      {stockItemList.docs ?
+      {recipeList.docs ?
         (
           <div className={classes.cardContainer}>
             <Card>
@@ -155,7 +155,7 @@ function StockItemListDisplay(props) {
               />
               <CardContent>
                 <TableContainer component={Paper}>
-                  <Table aria-label="stock item list">
+                  <Table aria-label="recipe list">
                     <TableHead className={classes.tableHeader}>
                       <TableRow>
                         <TableCell>
@@ -171,10 +171,10 @@ function StockItemListDisplay(props) {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {stockItemList.docs.map((row) => (
+                      {recipeList.docs.map((row) => (
                         <StyledTableRow
                           key={row.name + row.description}
-                          onClick={() => itemRedirect(row._id)}
+                          onClick={() => recipeRedirect(row._id)}
                         >
                           <TableCell component="th" scope="row">{row.name}</TableCell>
                           <TableCell>{row.description}</TableCell>
@@ -185,7 +185,7 @@ function StockItemListDisplay(props) {
                       <TableRow>
                         <TablePagination
                           rowsPerPageOptions={[5, 10, 20]}
-                          count={stockItemList.total}
+                          count={recipeList.total}
                           onChangePage={handlePageChange}
                           page={activePage}
                           rowsPerPage={itemsPerPage}
@@ -205,4 +205,4 @@ function StockItemListDisplay(props) {
   );
 };
 
-export default StockItemListDisplay;
+export default RecipeListDisplay;
