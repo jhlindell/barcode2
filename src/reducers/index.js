@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { authReducer, signupReducer, usernameReducer } from '../components/Login/reducers';
 import { messageReducer } from '../components/Messages/reducers';
 import { stockItemListReducer, stockItemReducer } from '../components/StockItems/reducers';
-import { recipeListReducer } from '../components/Recipes/reducers';
+import { recipeListReducer, recipeReducer } from '../components/Recipes/reducers';
 import { connectRouter } from 'connected-react-router';
 
 const appReducers = (history) => combineReducers({
@@ -13,6 +13,7 @@ const appReducers = (history) => combineReducers({
   stockItemList: stockItemListReducer,
   stockItem: stockItemReducer,
   recipeList: recipeListReducer,
+  recipe: recipeReducer,
   router: connectRouter(history)
 });
 

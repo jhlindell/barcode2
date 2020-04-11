@@ -12,6 +12,7 @@ import StockItemCreate from '../StockItems/components/StockItemCreate';
 import StockItemEdit from '../StockItems/components/StockItemEdit';
 import PrivateRoute from '../utils/PrivateRoute';
 import RecipeList from '../Recipes/components/RecipeListContainer';
+import RecipeDetail from '../Recipes/components/RecipeDetailContainer';
 
 const useStyles = makeStyles({
   appRoot: {
@@ -35,6 +36,7 @@ function App() {
         <Route path='/stockitems/:id' component={StockItemDetail} />
 
         <Route exact path='/recipes' component={RecipeList} />
+        <Route path='/recipes/:id' component={RecipeDetail} />
 
         <Route exact path='/' component={Home} />
       </Switch>
