@@ -19,6 +19,7 @@ const useStyles = makeStyles({
     height: '92vh'
   },
   card: {
+    minWidth: 350,
     maxWidth: '50%'
   },
   cardHeader: {

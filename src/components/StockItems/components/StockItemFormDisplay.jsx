@@ -18,7 +18,8 @@ const useStyles = makeStyles({
     height: '92vh'
   },
   card: {
-    width: '60%'
+    maxWidth: '60%',
+    minWidth: 350
   },
   cardHeader: {
     textAlign: 'center',
@@ -89,6 +90,7 @@ function StockItemFormDisplay(props) {
               label="Description"
               onChange={descriptionOnChange}
               className={classes.field}
+              multiline
               error={validationErrors.description !== undefined}
               helperText={validationErrors.description}
             />

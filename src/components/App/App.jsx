@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import { Container } from '@material-ui/core';
 import Navbar from '../Navbar/Navbar';
 import Home from '../Home/Home';
 import Signin from '../Login/components/SigninContainer';
@@ -26,20 +27,22 @@ function App() {
   return (
     <div className={classes.appRoot}>
       <Navbar />
-      <Switch>
-        <Route path='/signin' component={Signin} />
-        <Route path='/signup' component={Signup} />
+      <Container maxWidth="md">
+        <Switch>
+          <Route path='/signin' component={Signin} />
+          <Route path='/signup' component={Signup} />
 
-        <Route exact path='/stockitems/edit/:id' component={PrivateRoute(StockItemEdit)} />
-        <Route exact path='/stockitems/create' component={PrivateRoute(StockItemCreate)} />
-        <Route exact path='/stockitems' component={StockItemList} />
-        <Route path='/stockitems/:id' component={StockItemDetail} />
+          <Route exact path='/stockitems/edit/:id' component={PrivateRoute(StockItemEdit)} />
+          <Route exact path='/stockitems/create' component={PrivateRoute(StockItemCreate)} />
+          <Route exact path='/stockitems' component={StockItemList} />
+          <Route path='/stockitems/:id' component={StockItemDetail} />
 
-        <Route exact path='/recipes' component={RecipeList} />
-        <Route path='/recipes/:id' component={RecipeDetail} />
+          <Route exact path='/recipes' component={RecipeList} />
+          <Route path='/recipes/:id' component={RecipeDetail} />
 
-        <Route exact path='/' component={Home} />
-      </Switch>
+          <Route exact path='/' component={Home} />
+        </Switch>
+      </Container>
       <Messages />
     </div>
   );

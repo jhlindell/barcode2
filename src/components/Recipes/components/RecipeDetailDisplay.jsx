@@ -6,10 +6,13 @@ import {
   CardHeader,
   CardContent,
   CardActions,
-  CardMedia
+  CardMedia,
+  Grid,
+  Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import theme from '../../../theme';
+import RecipeIngredientTable from './RecipeIngredientTable';
 
 const useStyles = makeStyles({
   cardContainer: {
@@ -19,7 +22,8 @@ const useStyles = makeStyles({
     height: '92vh'
   },
   card: {
-    maxWidth: '50%'
+    maxWidth: '80%',
+    minWidth: 350
   },
   cardHeader: {
     backgroundColor: theme.palette.background.header,
@@ -30,8 +34,11 @@ const useStyles = makeStyles({
     justifyContent: 'center'
   },
   cardMedia: {
-    width: 50,
-    marginRight: 20
+    width: 75,
+    alignSelf: 'center',
+    justifySelf: 'center',
+    display: 'flex',
+    margin: 'auto'
   },
   content: {
     display: 'flex',
@@ -50,7 +57,15 @@ const useStyles = makeStyles({
     '&:hover': {
       backgroundColor: theme.palette.warning.hover
     }
-  }
+  },
+  descriptionGrid: {
+    borderBottom: 'solid lightgray 1px',
+    marginBottom: 8
+  },
+  instructionHeader: {
+    textAlign: 'center',
+    marginBottom: 8
+  },
 });
 
 function RecipeDetailDisplay(props) {
@@ -60,7 +75,7 @@ function RecipeDetailDisplay(props) {
     goBack,
     handleDelete,
     handleEdit,
-    auth
+    auth,
   } = props;
 
   return (
@@ -72,7 +87,41 @@ function RecipeDetailDisplay(props) {
             title={recipe.current.name}
           />
           <CardContent>
+            <Grid
+              container
+              spacing={2}
+              className={classes.descriptionGrid}
+            >
+              <Grid item xs={9}>
+                <Typography variant="h5">
+                  Description:
+                </Typography>
+                <p>{recipe.current.description}</p>
+              </Grid>
+              <Grid item xs={3}>
+                <CardMedia
+                  className={classes.cardMedia}
+                  src={cocktail}
+                  component="img"
+                />
+              </Grid>
+            </Grid>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <RecipeIngredientTable ingredients={recipe.current.ingredients} />
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="h6" className={classes.instructionHeader}>
+                  Instructions:
+                </Typography>
+                <ol>
+                  {recipe.current.instructions.map(instruction => (
+                    <li key={instruction}>{instruction}</li>
+                  ))}
+                </ol>
 
+              </Grid>
+            </Grid>
           </CardContent>
           <CardActions className={classes.cardFooter}>
             <Button

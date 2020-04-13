@@ -23,10 +23,9 @@ import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import theme from '../../../theme';
 
 const useStyles = makeStyles({
-  cardContainer: {
-    width: '80%',
-    display: 'flex',
-    margin: '20px auto 20px auto',
+  card: {
+    marginTop: 20,
+    marginBottom: 20
   },
   tableHeader: {
     backgroundColor: theme.palette.secondary.main,
@@ -147,57 +146,55 @@ function StockItemListDisplay(props) {
     <Fragment>
       {stockItemList.docs ?
         (
-          <div className={classes.cardContainer}>
-            <Card>
-              <CardHeader
-                className={classes.headerStyles}
-                title={renderHeaderNode()}
-              />
-              <CardContent>
-                <TableContainer component={Paper}>
-                  <Table aria-label="stock item list">
-                    <TableHead className={classes.tableHeader}>
-                      <TableRow>
-                        <TableCell>
-                          <Typography variant='h6'>
-                            Name
+          <Card className={classes.card}>
+            <CardHeader
+              className={classes.headerStyles}
+              title={renderHeaderNode()}
+            />
+            <CardContent>
+              <TableContainer component={Paper}>
+                <Table aria-label="stock item list">
+                  <TableHead className={classes.tableHeader}>
+                    <TableRow>
+                      <TableCell>
+                        <Typography variant='h6'>
+                          Name
                           </Typography>
-                        </TableCell>
-                        <TableCell>
-                          <Typography variant='h6'>
-                            Description
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant='h6'>
+                          Description
                           </Typography>
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {stockItemList.docs.map((row) => (
-                        <StyledTableRow
-                          key={row.name + row.description}
-                          onClick={() => itemRedirect(row._id)}
-                        >
-                          <TableCell component="th" scope="row">{row.name}</TableCell>
-                          <TableCell>{row.description}</TableCell>
-                        </StyledTableRow>
-                      ))}
-                    </TableBody>
-                    <TableFooter>
-                      <TableRow>
-                        <TablePagination
-                          rowsPerPageOptions={[5, 10, 20]}
-                          count={stockItemList.total}
-                          onChangePage={handlePageChange}
-                          page={activePage}
-                          rowsPerPage={itemsPerPage}
-                          onChangeRowsPerPage={handleItemsPerPageChange}
-                        />
-                      </TableRow>
-                    </TableFooter>
-                  </Table>
-                </TableContainer>
-              </CardContent>
-            </Card>
-          </div>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {stockItemList.docs.map((row) => (
+                      <StyledTableRow
+                        key={row.name + row.description}
+                        onClick={() => itemRedirect(row._id)}
+                      >
+                        <TableCell component="th" scope="row">{row.name}</TableCell>
+                        <TableCell>{row.description}</TableCell>
+                      </StyledTableRow>
+                    ))}
+                  </TableBody>
+                  <TableFooter>
+                    <TableRow>
+                      <TablePagination
+                        rowsPerPageOptions={[5, 10, 20]}
+                        count={stockItemList.total}
+                        onChangePage={handlePageChange}
+                        page={activePage}
+                        rowsPerPage={itemsPerPage}
+                        onChangeRowsPerPage={handleItemsPerPageChange}
+                      />
+                    </TableRow>
+                  </TableFooter>
+                </Table>
+              </TableContainer>
+            </CardContent>
+          </Card>
         ) : null
       }
     </Fragment>
