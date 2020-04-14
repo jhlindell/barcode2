@@ -12,7 +12,8 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import theme from '../../../theme';
-import RecipeIngredientTable from './RecipeIngredientTable';
+import RecipeIngredients from './RecipeIngredientTable';
+import RecipeInstructions from './RecipeInstructionTable';
 
 const useStyles = makeStyles({
   cardContainer: {
@@ -108,18 +109,19 @@ function RecipeDetailDisplay(props) {
             </Grid>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <RecipeIngredientTable ingredients={recipe.current.ingredients} />
+                <RecipeIngredients
+                  ingredients={recipe.current.ingredients}
+                  deleteIngredient={null}
+                />
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="h6" className={classes.instructionHeader}>
                   Instructions:
                 </Typography>
-                <ol>
-                  {recipe.current.instructions.map(instruction => (
-                    <li key={instruction}>{instruction}</li>
-                  ))}
-                </ol>
-
+                <RecipeInstructions
+                  instructions={recipe.current.instructions}
+                  deleteInstruction={null}
+                />
               </Grid>
             </Grid>
           </CardContent>

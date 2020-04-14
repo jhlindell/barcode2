@@ -14,6 +14,20 @@ const initialState = {
   current: undefined,
   isDirty: false,
   errors: undefined,
+};
+
+const newRecipe = {
+  name: '',
+  description: '',
+  ingredients: [],
+  instructions: []
+};
+
+const newErrors = {
+  name: undefined,
+  description: undefined,
+  ingredients: undefined,
+  instructions: undefined
 }
 
 export function recipeReducer(state = initialState, action) {
@@ -32,8 +46,8 @@ export function recipeReducer(state = initialState, action) {
       return {
         isLoading: false,
         isDirty: false,
-        errors: undefined,
-        current: undefined
+        errors: newErrors,
+        current: newRecipe
       };
     case SET_RECIPE_VALIDATION_ERRORS:
       return { ...state, errors: action.payload };

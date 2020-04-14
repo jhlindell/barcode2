@@ -36,6 +36,7 @@ const theme = createMuiTheme({
       default: '#fff',
       tableRowHighlight: grey[300],
       header: grey[400],
+      light: grey[100]
     },
   },
 });

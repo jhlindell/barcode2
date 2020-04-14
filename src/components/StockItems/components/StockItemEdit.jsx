@@ -24,7 +24,6 @@ function StockItemCreate() {
   }, [id, dispatch]);
 
   function handleSubmit() {
-    console.log('stockItem to edit: ', stockItem.current);
     const newStockItem = { name: stockItem.current.name, description: stockItem.current.description }
     dispatch(editStockItem(stockItem.current._id, newStockItem));
   }

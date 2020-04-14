@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   IconButton,
   Paper,
@@ -9,16 +8,12 @@ import {
   TableContainer,
   TableRow,
   Tooltip,
-  Typography
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import ClearOutlinedIcon from '@material-ui/icons/ClearOutlined';
 import theme from '../../../theme';
 
 const useStyles = makeStyles({
-  tableHead: {
-    textAlign: 'center',
-    marginBottom: 8
-  },
   deleteButton: {
     backgroundColor: theme.palette.error.main,
     '&:hover': {
@@ -26,39 +21,25 @@ const useStyles = makeStyles({
     },
     marginLeft: 10
   }
-});
+})
 
-function RecipeIngredientTable(props) {
+function RecipeInstructionTable(props) {
+  const { instructions, deleteInstruction } = props;
   const classes = useStyles();
-  const { ingredients, deleteIngredient } = props;
-  const sortedIngredients = ingredients.sort((a, b) => {
-    if (a.measure > b.measure) {
-      return -1;
-    }
-    if (a.measure < b.measure) {
-      return 1;
-    }
-    return 0
-  });
 
   return (
     <Fragment>
-      <Typography variant="h6" className={classes.tableHead}>
-        Ingredients:
-      </Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableBody>
-            {sortedIngredients.map((ingredient, index) => (
-              <TableRow key={ingredient.name}>
-                <TableCell component="th" scope="row">{ingredient.measure}</TableCell>
-                <TableCell>{ingredient.unit}</TableCell>
-                <TableCell>{ingredient.name}</TableCell>
-                {deleteIngredient && (
+            {instructions.map((instruction, index) => (
+              <TableRow key={instruction}>
+                <TableCell component="th" scope="row">{index + 1}. {instruction}</TableCell>
+                {deleteInstruction && (
                   <TableCell>
-                    <Tooltip title="Delete Ingredient">
+                    <Tooltip title="Delete Instruction">
                       <IconButton
-                        onClick={() => deleteIngredient(index)}
+                        onClick={() => deleteInstruction(index)}
                         classes={{
                           root: classes.deleteButton
                         }}
@@ -78,4 +59,4 @@ function RecipeIngredientTable(props) {
   )
 }
 
-export default RecipeIngredientTable;
+export default RecipeInstructionTable;

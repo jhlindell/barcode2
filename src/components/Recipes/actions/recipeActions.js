@@ -39,10 +39,6 @@ export function getRecipeById(id, failure) {
   }
 }
 
-export function clearSingleRecipe() {
-  return { type: CLEAR_RECIPE };
-}
-
 export function deleteRecipe(id) {
   return function (dispatch, getState) {
     const { auth } = getState();
@@ -61,6 +57,7 @@ export function deleteRecipe(id) {
 }
 
 export function createRecipe(recipe) {
+  console.log('create recipe action called');
   return function (dispatch, getState) {
     const { auth } = getState();
     axios.post(`${URL}/api/recipes`, recipe, { headers: { authorization: auth.token } })

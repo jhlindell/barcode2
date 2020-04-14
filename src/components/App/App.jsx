@@ -14,6 +14,7 @@ import StockItemEdit from '../StockItems/components/StockItemEdit';
 import PrivateRoute from '../utils/PrivateRoute';
 import RecipeList from '../Recipes/components/RecipeListContainer';
 import RecipeDetail from '../Recipes/components/RecipeDetailContainer';
+import RecipeCreate from '../Recipes/components/RecipeCreate';
 
 const useStyles = makeStyles({
   appRoot: {
@@ -37,6 +38,7 @@ function App() {
           <Route exact path='/stockitems' component={StockItemList} />
           <Route path='/stockitems/:id' component={StockItemDetail} />
 
+          <Route exact path='/recipes/create' component={PrivateRoute(RecipeCreate)} />
           <Route exact path='/recipes' component={RecipeList} />
           <Route path='/recipes/:id' component={RecipeDetail} />
 
