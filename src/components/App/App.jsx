@@ -11,7 +11,7 @@ import StockItemList from '../StockItems/components/StockItemListContainer';
 import StockItemDetail from '../StockItems/components/StockItemDetailContainer';
 import StockItemCreate from '../StockItems/components/StockItemCreate';
 import StockItemEdit from '../StockItems/components/StockItemEdit';
-import PrivateRoute from '../utils/PrivateRoute';
+import PrivateRoute from './PrivateRoute';
 import RecipeList from '../Recipes/components/RecipeListContainer';
 import RecipeDetail from '../Recipes/components/RecipeDetailContainer';
 import RecipeCreate from '../Recipes/components/RecipeCreate';

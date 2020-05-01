@@ -16,7 +16,7 @@ function StockItemCreate() {
   }, []);
 
   function handleSubmit() {
-    dispatch(createStockItem(stockItem.current));
+    dispatch(createStockItem(stockItem.current, true));
   }
 
   function handleCancelClick() {

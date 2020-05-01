@@ -43,9 +43,6 @@ function RecipeIngredientTable(props) {
 
   return (
     <Fragment>
-      <Typography variant="h6" className={classes.tableHead}>
-        Ingredients:
-      </Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableBody>

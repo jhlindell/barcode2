@@ -63,7 +63,7 @@ const useStyles = makeStyles({
     borderBottom: 'solid lightgray 1px',
     marginBottom: 8
   },
-  instructionHeader: {
+  categoryHeader: {
     textAlign: 'center',
     marginBottom: 8
   },
@@ -109,13 +109,16 @@ function RecipeDetailDisplay(props) {
             </Grid>
             <Grid container spacing={2}>
               <Grid item xs={6}>
+                <Typography variant="h6" className={classes.categoryHeader}>
+                  Ingredients:
+                </Typography>
                 <RecipeIngredients
                   ingredients={recipe.current.ingredients}
                   deleteIngredient={null}
                 />
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="h6" className={classes.instructionHeader}>
+                <Typography variant="h6" className={classes.categoryHeader}>
                   Instructions:
                 </Typography>
                 <RecipeInstructions

@@ -1,13 +1,15 @@
 import React, { Fragment, useState } from 'react';
 import RecipeFormDisplay from './RecipeFormDisplay';
-import { useDispatch } from 'react-redux';
-import { recipeOnChange, setValidationErrors, clearValidationErrors } from '../actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { recipeOnChange, setNewIngValidationErrors, clearNewIngValidationErrors } from '../actions';
 
 function RecipeFormContainer(props) {
   const [showAddInstruction, setShowAddInstruction] = useState(false);
   const [newInstruction, setNewInstruction] = useState('');
   const [newInstructionError, setNewInstructionError] = useState(undefined);
+  const [showAddIngredient, setShowAddIngredient] = useState(false);
   const dispatch = useDispatch();
+  const newIngredient = useSelector(state => state.newIngredient);
   const { handleSubmit, handleCancelClick, recipe } = props;
 
   function deleteIngredient(index) {
@@ -66,6 +68,57 @@ function RecipeFormContainer(props) {
     }
   }
 
+  // functions for changing ingredients on recipe
+  function toggleAddNewIngredient() {
+    setShowAddIngredient(!showAddIngredient);
+  }
+
+  function validateNewIngredient() {
+    let isValid = true;
+    let errors = {
+      measure: undefined,
+      unit: undefined,
+      stockItem: undefined
+    };
+
+    if (parseFloat(newIngredient.current.measure) <= 0) {
+      errors.measure = 'Please enter a positive measure value';
+      isValid = false;
+    }
+
+    if (typeof parseFloat(newIngredient.current.measure) !== 'number') {
+      errors.measure = "Can't use Fractions";
+      isValid = false;
+    }
+
+    if (newIngredient.current.stockItem === undefined) {
+      errors.ingredient = 'Please pick an ingredient';
+      isValid = false;
+    }
+    console.log('errors: ', errors);
+    if (!isValid) {
+      dispatch(setNewIngValidationErrors(errors));
+    }
+    return isValid;
+  }
+
+  function handleNewIngredientSubmit() {
+    const isValid = validateNewIngredient();
+    if (isValid) {
+      let ingredientArray = recipe.current.ingredients;
+      let newIng = {
+        measure: newIngredient.current.measure,
+        unit: newIngredient.current.unit,
+        name: newIngredient.current.stockItem.name,
+        _id: newIngredient.current.stockItem._id
+      }
+      ingredientArray.push(newIng);
+      const newRecipe = { ...recipe.current, ingredients: ingredientArray };
+      dispatch(recipeOnChange(newRecipe));
+      toggleAddNewIngredient();
+    }
+  }
+
   return (
     <Fragment>
       {recipe.current ?
@@ -85,6 +138,9 @@ function RecipeFormContainer(props) {
             toggleAddNewInstruction={toggleAddNewInstruction}
             submitNewInstruction={submitNewInstruction}
             newInstructionError={newInstructionError}
+            showAddIngredient={showAddIngredient}
+            toggleAddNewIngredient={toggleAddNewIngredient}
+            handleNewIngredientSubmit={handleNewIngredientSubmit}
           />
         ) : null
       }

@@ -39,13 +39,15 @@ export function getStockItemById(id) {
   }
 }
 
-export function createStockItem(item) {
+export function createStockItem(item, redirectBool) {
   return function (dispatch, getState) {
     const { auth } = getState();
     axios.post(`${URL}/api/stock_items/`, item, { headers: { authorization: auth.token } })
       .then((response) => {
         dispatch(addMessageToContainer('Item created successfully!', messageType.SUCCESS));
-        dispatch(push(`/stockitems/${response.data._id}`));
+        if (redirectBool) {
+          dispatch(push(`/stockitems/${response.data._id}`));
+        }
       })
       .catch((error) => {
         let err = error.toString();

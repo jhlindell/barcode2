@@ -15,6 +15,7 @@ import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import theme from '../../../theme';
 import RecipeIngredients from './RecipeIngredientTable';
 import RecipeInstructions from './RecipeInstructionTable';
+import RecipeAddIngredient from './RecipeAddIngredient';
 
 const useStyles = makeStyles({
   cardContainer: {
@@ -24,7 +25,6 @@ const useStyles = makeStyles({
     height: '92vh'
   },
   card: {
-    maxWidth: '60%',
     minWidth: 350
   },
   cardHeader: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     flexDirection: 'column'
   },
   field: {
-    paddingBottom: 20,
+    paddingBottom: 16,
   },
   centering: {
     display: 'flex',
@@ -87,7 +87,10 @@ function RecipeFormDisplay(props) {
     newInstructionOnChange,
     toggleAddNewInstruction,
     submitNewInstruction,
-    newInstructionError
+    newInstructionError,
+    showAddIngredient,
+    toggleAddNewIngredient,
+    handleNewIngredientSubmit
   } = props;
   const classes = useStyles();
 
@@ -121,14 +124,41 @@ function RecipeFormDisplay(props) {
                 />
               </div>
               <div>
-                <RecipeIngredients
-                  ingredients={recipe.ingredients}
-                  deleteIngredient={deleteIngredient}
-                />
+                <div className={classes.instructionHeader}>
+                  <Typography variant="h6">
+                    Ingredients:
+                  </Typography>
+                  <Tooltip title="Add new Ingredient">
+                    <IconButton
+                      onClick={toggleAddNewIngredient}
+                      size="small"
+                      classes={{
+                        root: classes.addInstButton
+                      }}
+                    >
+                      <AddOutlinedIcon />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+                {recipe.ingredients.length ?
+                  (
+                    <RecipeIngredients
+                      ingredients={recipe.ingredients}
+                      deleteIngredient={deleteIngredient}
+                    />
+                  ) : (
+                    <p className={classes.centering}>...</p>
+                  )
+                }
+                {showAddIngredient &&
+                  <RecipeAddIngredient
+                    handleNewIngredientSubmit={handleNewIngredientSubmit}
+                  />
+                }
               </div>
               <div>
                 <div className={classes.instructionHeader}>
-                  <Typography variant="h6" >
+                  <Typography variant="h6">
                     Instructions:
                   </Typography>
                   <Tooltip title="Add new Instruction">
@@ -151,9 +181,9 @@ function RecipeFormDisplay(props) {
                       deleteInstruction={deleteInstruction}
                     />
                   ) : (
-                    <p className={classes.centering}>No Instructions</p>
-                  )}
-
+                    <p className={classes.centering}>...</p>
+                  )
+                }
                 {showAddInstruction &&
                   (
                     <div className={classes.newInstGroup}>
